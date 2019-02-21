@@ -1,10 +1,8 @@
-function test() {
+function test() 
+{
   
-  var folders = DriveApp.getFoldersByName('Imager');
-
+  var Importer = new GoogleDriveImporter();
   
-  Logger.log(folders.next().getName());
-
+  Importer.setImages();
   
-
 }
