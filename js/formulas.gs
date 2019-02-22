@@ -1,4 +1,0 @@
-function DRIVEIMAGE() 
-{
-  return 'DRIVEIMAGE'
-}
