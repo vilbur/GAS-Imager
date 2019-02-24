@@ -2,8 +2,8 @@ function addMenu()
 {
   var ui = SpreadsheetApp.getUi();
   // Or DocumentApp or FormApp.
-  ui.createMenu('Custom Menu')
-  .addItem('First item', 'menuItem1')
+  ui.createMenu('Imager')
+  .addItem('Help', 'showHelpDialog')
   .addSeparator()
   .addSubMenu(ui.createMenu('Sub-menu')
               .addItem('Second item', 'menuItem2'))

@@ -5,7 +5,8 @@
 /*=====================================================================================================================================*/
 /** Include files to html
 */
-function include(filename) {
+function include(filename)
+{
   return HtmlService.createHtmlOutputFromFile(filename)
       .getContent();
 }
@@ -15,7 +16,8 @@ function include(filename) {
 /** 
 *	Get dialog functions
 */
-function showDialog(file, title){
+function showDialog(file, title)
+{
   	var html = HtmlService.createTemplateFromFile(file).evaluate();
 	SpreadsheetApp.getUi().showModalDialog(html, title);
 }
@@ -35,7 +37,8 @@ function showSidebar(file, title){
 /**
  * @return boolean TRUE if ok, false in cancel or close
 */
-function showConfirm(title, message, buttons) {
+function showConfirm(title, message, buttons)
+{
 	if( typeof buttons === 'undefined' ) buttons = 'YES_NO';
 	
 	var ui = SpreadsheetApp.getUi(); // Same variations.
@@ -54,7 +57,8 @@ function showConfirm(title, message, buttons) {
 /**
 * @return string|false|null return STRING if value inserted, FALSE if canceled, NULL if closed
 */
-function showPrompt(title, message) {
+function showPrompt(title, message)
+{
 	var ui	= SpreadsheetApp.getUi(); // Same variations.
 	var result	= ui.prompt(title, message, ui.ButtonSet.OK_CANCEL);
 	var button	= result.getSelectedButton();
@@ -75,7 +79,8 @@ function showPrompt(title, message) {
  * Displays an HTML-service dialog in Google Sheets that contains client-side
  * JavaScript code for the Google Picker API.
  */
-function showPicker(title, data) {
+function showPicker(title, data)
+{
   if( typeof title === 'undefined' ) title = 'Select a file';
   var html_template = HtmlService.createTemplateFromFile('_FolderPicker.html')
   html_template.data = data;
@@ -93,7 +98,8 @@ function showPicker(title, data) {
  * Run function > open dialog with link > click on link > close dialog
  * 
  */
-function openLink(url, message) {
+function openLink(url, message)
+{
   if( typeof message === 'undefined' ) message = 'Opening link';
 
   var htmlString = '<script>window.open("'+url+'");google.script.host.close();</script>';
