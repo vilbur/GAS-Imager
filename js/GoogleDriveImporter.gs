@@ -39,8 +39,6 @@ var GoogleDriveImporter = (function()
 		 */
 		var setImageToCell = function(file)
 		{
-  
-          
           var range = sheet.getRange('A1');
           range.activate();
           
