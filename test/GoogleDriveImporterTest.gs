@@ -1,4 +1,4 @@
-function test() 
+function GoogleDriveImporterTest() 
 {
   
   var Importer = new GoogleDriveImporter();
