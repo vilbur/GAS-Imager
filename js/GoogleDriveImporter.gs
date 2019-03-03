@@ -26,16 +26,26 @@ var GoogleDriveImporter = (function()
           return this;
 		};
       
-		/** Set images
-		 *
+		/** Import images to cells
 		 */
 		this.import = function()
 		{
 			var files	= _folder.getFiles();
-			var file = files.next();
+			
+			while (files.hasNext())
+				importImage(files.next());
 
+		};
+		/** Import image
+		 *
+		 * @return self
+		 */
+		var importImage = function( file )
+		{
+            Logger.log(file.getName());
 			setFileSharing(file);
 			setImageToCell(file);
+			offsetRange();
 		};
 		
 		/** Get sharable link
@@ -54,6 +64,13 @@ var GoogleDriveImporter = (function()
 			range.setFormula('=IMAGE("http://drive.google.com/uc?export=view&id=' + file.getId()+'",2)');
 		};
 		
+		/** Offset range
+		 *
+		 */
+		var offsetRange = function()
+		{
+			range = range.offset(1, 0 );
+		};
 	}
 	
 	

@@ -73,7 +73,7 @@
             document.getElementById('result').innerHTML = id;
             
             google.script.run.importImagesFromFolder(id)
-//            google.script.host.close();
+            google.script.host.close();
 
         }
         else if (action == google.picker.Action.CANCEL) {
