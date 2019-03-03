@@ -2,6 +2,7 @@
 /*                                                                                                                                     */
 /*  HTLM WRAPPERS                                                                                                                      */
 /*                                                                                                                                     */
+/* !!! OKOMENTOVAT FUNKCE !!! */
 /*=====================================================================================================================================*/
 /** Include files to html
 */
@@ -31,9 +32,15 @@ function showSidebar(file, title){
       SpreadsheetApp.getUi().showSidebar(html);
 }
 /* ================================================================= */
-/*  CONFIRM                                                          */
+/*  ALER & CONFIRM                                                          */
 /* ================================================================= */
-
+/**
+ * Show alert dialog
+*/
+function alert( message )
+{
+  SpreadsheetApp.getUi().alert(message);
+}
 /**
  * @return boolean TRUE if ok, false in cancel or close
 */
