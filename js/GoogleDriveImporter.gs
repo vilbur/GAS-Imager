@@ -38,15 +38,25 @@ var GoogleDriveImporter = (function()
 		};
 		/** Import image
 		 *
-		 * @return self
 		 */
 		var importImage = function( file )
 		{
-            Logger.log(file.getName());
-			setFileSharing(file);
-			setImageToCell(file);
-			offsetRange();
+            Logger.log( file.getName() +': '+ isImage(file) );
+           if( isImage(file)==false )
+             return
+          
+          setFileSharing(file);
+          setImageToCell(file);
+          offsetRange();
 		};
+   		/** Import image
+		 *
+		 */
+		var isImage = function( file )
+		{          
+			return file.getMimeType().match(/image/) !== null
+		};   
+      
 		
 		/** Get sharable link
 		 */
