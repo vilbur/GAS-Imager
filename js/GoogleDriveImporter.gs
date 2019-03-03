@@ -37,7 +37,22 @@ var GoogleDriveImporter = (function()
 			range.setValues( getRowsOfImages(files) )
 			
 		};
-      
+		/** Get files from folder
+		 */
+		var getFilesToArray = function( files )
+		{
+          var files_array	= [];
+          
+          while (files.hasNext())
+          {
+            var File = files.next();
+            
+			if (isImage(File))
+              files_array.push(File);
+          }
+          
+          return files_array;
+		};
 		/** 
 		 * @param [File] array of File objects
 		 */
@@ -47,40 +62,30 @@ var GoogleDriveImporter = (function()
                return getRowData(File);
              });
         };
-      
 		/** 
 		 * @param File
 		 */
 		var getRowData = function(File)
 		{
-            return [File.getName()]
-        };
+//            return [File.getName()]
+//              return [getImportFormula(File)]
+              return [ File.getName().split('.').shift(), getImportFormula(File)]
 
-		/** Get files from folder
-		 */
-		var getFilesToArray = function( files )
-		{
-          var files_array	= [];
-          
-          while (files.hasNext())
-            files_array.push(files.next());
-          
-          return files_array;
-		};
+      };
 
-		/** Import image
-		 *
-		 */
-		var importImage = function(file)
-		{
-			Logger.log(file.getName() + ': ' + isImage(file));
-			if (isImage(file) === false)
-				return;
-
-			setFileSharing(file);
-			getImportFormula(file);
-
-        };
+//		/** Import image
+//		 *
+//		 */
+//		var importImage = function(file)
+//		{
+//			Logger.log(file.getName() + ': ' + isImage(file));
+//			if (isImage(file) === false)
+//				return;
+//
+//			setFileSharing(file);
+//			getImportFormula(file);
+//
+//        };
 		/** Import image
 		 *
 		 */
@@ -100,19 +105,17 @@ var GoogleDriveImporter = (function()
 		/** Set image to cell
 		 *
 		 */
-		var getImportFormula = function(file)
+		var getImportFormula = function(File)
 		{
-			'=IMAGE("http://drive.google.com/uc?export=view&id=' + file.getId() + '",2)';
+			return '=IMAGE("http://drive.google.com/uc?export=view&id=' + File.getId() + '",2)';
 		};
 
 		/** Offset range
 		 *
 		 */
 		var offsetRange = function( rows ) {
-          	range = range.offset(0, 0, rows, 1 );
+          	range = range.offset(0, 0, rows, 2 );
 		};
-		
-		
 
 		/**  
 		 *	
