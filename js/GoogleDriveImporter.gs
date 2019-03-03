@@ -15,6 +15,7 @@ var GoogleDriveImporter = (function()
 
 		var folders = DriveApp.getFoldersByName('Test-dummy-files');
 		var _folder;
+        var _files = [];
 
 		/** Set images
 		 *
@@ -30,35 +31,55 @@ var GoogleDriveImporter = (function()
 		 */
 		this.import = function()
 		{
-			var files = getFilesToArray( _folder.getFiles() );
-
-			offsetRange(files.length);
+			setFiles( _folder.getFiles() );
+            sortFiles();
+            
+            setFilesSharing();
+            
+			offsetRange(_files.length);
           
-			range.setValues( getRowsOfImages(files) )
+			range.setValues( getRowsOfImages() )
 			
 		};
 		/** Get files from folder
 		 */
-		var getFilesToArray = function( files )
-		{
-          var files_array	= [];
-          
+		var setFiles = function( files )
+		{          
           while (files.hasNext())
           {
             var File = files.next();
             
 			if (isImage(File))
-              files_array.push(File);
+              _files.push(File);
           }
-          
-          return files_array;
+		};
+		/** Sort files by filenames
+		 */
+		var sortFiles = function( )
+		{          
+
+            function compare(a, b)
+            {
+                const genreA = a.getName().toUpperCase();
+                const genreB = b.getName().toUpperCase();
+                
+                var comparison = 0;
+                if (genreA > genreB) {
+                  comparison = 1;
+                } else if (genreA < genreB) {
+                  comparison = -1;
+                }
+                return comparison;
+            }
+            
+            _files.sort(compare)
 		};
 		/** 
 		 * @param [File] array of File objects
 		 */
-		var getRowsOfImages = function(files)
+		var getRowsOfImages = function()
 		{
-             return files.map(function(File){
+             return _files.map(function(File){
                return getRowData(File);
              });
         };
@@ -67,47 +88,29 @@ var GoogleDriveImporter = (function()
 		 */
 		var getRowData = function(File)
 		{
-//            return [File.getName()]
-//              return [getImportFormula(File)]
-              return [ File.getName().split('.').shift(), getImportFormula(File)]
+            return [ File.getName().split('.').shift(), getImportFormula(File)]
+        };
 
-      };
-
-//		/** Import image
-//		 *
-//		 */
-//		var importImage = function(file)
-//		{
-//			Logger.log(file.getName() + ': ' + isImage(file));
-//			if (isImage(file) === false)
-//				return;
-//
-//			setFileSharing(file);
-//			getImportFormula(file);
-//
-//        };
 		/** Import image
 		 *
 		 */
-		var isImage = function(file)
+		var isImage = function(File)
 		{
-			return file.getMimeType().match(/image/) !== null
+			return File.getMimeType().match(/image/) !== null
 		};
-
-
 		/** Get sharable link
 		 */
-		var setFileSharing = function(file)
+		var setFilesSharing = function()
 		{
-			file.setSharing(DriveApp.Access.ANYONE_WITH_LINK, DriveApp.Permission.VIEW);
+          for(var i=0; i<_files.length;i++)
+			_files[i].setSharing(DriveApp.Access.ANYONE_WITH_LINK, DriveApp.Permission.VIEW);
 		};
-
 		/** Set image to cell
 		 *
 		 */
 		var getImportFormula = function(File)
 		{
-			return '=IMAGE("http://drive.google.com/uc?export=view&id=' + File.getId() + '",2)';
+			return '=IMAGE("http://drive.google.com/uc?export=view&id=' + File.getId() + '",1)';
 		};
 
 		/** Offset range
@@ -117,29 +120,7 @@ var GoogleDriveImporter = (function()
           	range = range.offset(0, 0, rows, 2 );
 		};
 
-		/**  
-		 *	
-		 */
-		function compare(a, b)
-		{
-			const genreA = a.getName().toUpperCase();
-			const genreB = b.getName().toUpperCase();
-			
-			var comparison = 0;
-			if (genreA > genreB) {
-			  comparison = 1;
-			} else if (genreA < genreB) {
-			  comparison = -1;
-			}
-			return comparison;
-		}
-
-
-		
-		
-		
 	}
-
 
 	return GoogleDriveImporter;
 })();
