@@ -11,20 +11,31 @@ var GoogleDriveImporter = (function()
 	{
 		var spread	= SpreadsheetApp.getActiveSpreadsheet();
 		var sheet	= spread.getActiveSheet();
+		var range	= sheet.getActiveRange();
+
 		var folders	= DriveApp.getFoldersByName('Test-dummy-files');
-		var folder	= folders.next();
+		var _folder;
 
 		/** Set images
 		 *
 		 */
-		this.setImages = function()
+		this.folder = function(folder_id)
 		{
-			var files	= folder.getFiles();
+		    _folder	= DriveApp.getFolderById( folder_id );
+          
+          return this;
+		};
+      
+		/** Set images
+		 *
+		 */
+		this.import = function()
+		{
+			var files	= _folder.getFiles();
 			var file = files.next();
 
 			setFileSharing(file);
 			setImageToCell(file);
-			
 		};
 		
 		/** Get sharable link
@@ -39,9 +50,7 @@ var GoogleDriveImporter = (function()
 		 */
 		var setImageToCell = function(file)
 		{
-          var range = sheet.getRange('A1');
-          range.activate();
-          
+                  
 			range.setFormula('=IMAGE("http://drive.google.com/uc?export=view&id=' + file.getId()+'",2)');
 		};
 		

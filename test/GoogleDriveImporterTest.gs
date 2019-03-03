@@ -1,8 +1,10 @@
 function GoogleDriveImporterTest() 
 {
-  
+  var folders	= DriveApp.getFoldersByName('Test-dummy-files');
   var Importer = new GoogleDriveImporter();
   
-  Importer.setImages();
+  Importer
+      .folder( folders.next().getId() )
+      .import();
   
 }

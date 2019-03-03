@@ -46,7 +46,7 @@
                 .setOAuthToken(token)
                 .setCallback(pickerCallback)
                 .setOrigin('https://docs.google.com')
-                .build();
+               .build();
 
             picker.setVisible(true);
 
@@ -62,14 +62,21 @@
      *
      * @param {object} data The response object.
      */
-    function pickerCallback(data) {
+    function pickerCallback(data)
+    {
         var action = data[google.picker.Response.ACTION];
-        if (action == google.picker.Action.PICKED) {
+        if (action == google.picker.Action.PICKED)
+        {
             var doc = data[google.picker.Response.DOCUMENTS][0];
             var id = doc[google.picker.Document.ID];
             // Show the ID of the Google Drive folder
             document.getElementById('result').innerHTML = id;
-        } else if (action == google.picker.Action.CANCEL) {
+            
+            google.script.run.importImagesFromFolder(id)
+//            google.script.host.close();
+
+        }
+        else if (action == google.picker.Action.CANCEL) {
             google.script.host.close();
         }
     }
