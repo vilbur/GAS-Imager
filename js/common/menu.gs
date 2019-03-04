@@ -1,17 +1,15 @@
 function addMenu()
 {
-  var ui = SpreadsheetApp.getUi();
-  // Or DocumentApp or FormApp.
-  ui.createMenu('Imager')
-  .addItem('Help', 'showHelpDialog')
-  .addItem('Sidebar', 'showSidebarDialog')
- .addSeparator()
-  .addItem('ImporterTest', 'GoogleDriveImporterTest')
-   .addItem('Folder Picker', 'showFolderPicker')
+	var ui = SpreadsheetApp.getUi();
 
- // .addSubMenu(ui.createMenu('Sub-menu')
-  //            .addItem('Second item', 'menuItem2'))
-  .addToUi();
-  
-  
+	ui.createMenu('GoogleDrive')
+		//.addItem('Help', 'showHelpDialog')
+		//.addSeparator()
+
+	.addSubMenu(ui.createMenu('Image Importer')
+		.addItem('ImporterTest', 'GoogleDriveImporterTest')
+		.addItem('Folder Picker', 'showFolderPicker')
+	)
+	.addToUi();
+
 }

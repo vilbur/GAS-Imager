@@ -25,7 +25,8 @@ function showDialog(file, title)
 
 /* === SIDEBAR ===
 */
-function showSidebar(file, title){
+function showSidebar(file, title)
+{
   var html = HtmlService.createTemplateFromFile(file).evaluate()
       .setSandboxMode(HtmlService.SandboxMode.IFRAME)
       .setTitle(title);

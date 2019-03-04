@@ -6,5 +6,4 @@ function GoogleDriveImporterTest()
   Importer
       .folder( folders.next().getId() )
       .import();
-  
 }
