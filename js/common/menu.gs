@@ -4,12 +4,14 @@ function addMenu()
 
 	ui.createMenu('GoogleDrive')
 		//.addItem('Help', 'showHelpDialog')
-		//.addSeparator()
 
-	.addSubMenu(ui.createMenu('Image Importer')
-		.addItem('ImporterTest', 'GoogleDriveImporterTest')
+//	.addSubMenu(ui.createMenu('Image Importer')
+		.addItem('ImportImagesFromFolder', 'ImportImagesFromFolder')
+		.addItem('ImportSingleImage', 'ImportSingleImage')
+        .addSeparator()
 		.addItem('Folder Picker', 'showFolderPicker')
-	)
+		.addItem('File Picker', 'showFilePicker')
+//	)
 	.addToUi();
 
 }

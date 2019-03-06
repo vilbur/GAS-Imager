@@ -1,33 +1,33 @@
 /**  
  *	
  */
-var GoogleDriveImporter = (function()
+var ImageImporter = (function()
 {
 	/*
 		CONSTRUCT
 	*/
 
-	function GoogleDriveImporter()
+	function ImageImporter()
 	{
 		var spread = SpreadsheetApp.getActiveSpreadsheet();
 		var sheet = spread.getActiveSheet();
 		var range = sheet.getActiveRange();
 
-		var folders = DriveApp.getFoldersByName('Test-dummy-files');
+//		var folders = DriveApp.getFoldersByName('Test-dummy-files');
 		var _folder;
         var _files = [];
 
-		/** Set images
-		 *
+		/** Set source folder for importing images
+		 * @param string folder_id
 		 */
-		this.folder = function(folder_id)
+		this.folder = function(folder_id) 
 		{
 			_folder = DriveApp.getFolderById(folder_id);
 
 			return this;
 		};
 
-		/** Import images to cells
+		/** Import images to range
 		 */
 		this.import = function()
 		{
@@ -39,7 +39,6 @@ var GoogleDriveImporter = (function()
 			offsetRange(_files.length);
           
 			range.setValues( getRowsOfImages() )
-			
 		};
 		/** Get files from folder
 		 */
@@ -122,5 +121,5 @@ var GoogleDriveImporter = (function()
 
 	}
 
-	return GoogleDriveImporter;
+	return ImageImporter;
 })();

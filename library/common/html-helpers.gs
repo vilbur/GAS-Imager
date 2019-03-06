@@ -81,25 +81,6 @@ function showPrompt(title, message)
 
 
 /* ================================================================= */
-/*  FILE PICKER                                                      */
-/* ================================================================= */
-/**
- * Displays an HTML-service dialog in Google Sheets that contains client-side
- * JavaScript code for the Google Picker API.
- */
-function showPicker(title, data)
-{
-  if( typeof title === 'undefined' ) title = 'Select a file';
-  var html_template = HtmlService.createTemplateFromFile('_FolderPicker.html')
-  html_template.data = data;
-  
-   var html =  html_template.evaluate().setWidth(600)
-      .setHeight(425) 
-      .setSandboxMode(HtmlService.SandboxMode.IFRAME);
-  SpreadsheetApp.getUi().showModalDialog(html,title );
-}
-
-/* ================================================================= */
 /*  OPEN LINK                                                        */
 /* ================================================================= */
 /** Open link via html dialog

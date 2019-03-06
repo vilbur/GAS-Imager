@@ -7,14 +7,15 @@
     var config	= <?!= JSON.stringify(config) ?>;
 
 
-    var DIALOG_DIMENSIONS = {
+    var DIALOG_DIMENSIONS =
+	{
         width: 600,
         height: 425
-
     };
     var pickerApiLoaded = false;
 
-    function onApiLoad() {
+    function onApiLoad()
+	{
         gapi.load('picker', {
             'callback': function() {
                 pickerApiLoaded = true;
@@ -26,29 +27,37 @@
             .getOAuthToken();
     }
 
-    function createPicker(token) {
-
+    function createPicker(token)
+	{
         if (pickerApiLoaded && token)
         {
-        
-        
             var docsView = new google.picker.DocsView()
                 .setIncludeFolders(config.IncludeFolders)
                 .setMimeTypes(config.mimeTypes)
                 .setSelectFolderEnabled(config.SelectFolderEnabled)
                 .setMode( config.GRID ? google.picker.DocsViewMode.GRID : google.picker.DocsViewMode.LIST )
 
-            var picker = new google.picker.PickerBuilder()
+            var PickerBuilder = new google.picker.PickerBuilder()
                 .addView(docsView)
-                .enableFeature(google.picker.Feature.NAV_HIDDEN)
                 .hideTitleBar()
                 .setSize(DIALOG_DIMENSIONS.width - 2, DIALOG_DIMENSIONS.height - 2)
                 .setOAuthToken(token)
                 .setCallback(pickerCallback)
                 .setOrigin('https://docs.google.com')
-               .build();
+			    
 
-            picker.setVisible(true);
+			/** Set features https://developers.google.com/picker/docs/reference#Feature
+			 */
+			var setFeatures = (function()
+			{
+				var feature_keys	= ['MINE_ONLY', 'MULTISELECT_ENABLED', 'NAV_HIDDEN', 'SIMPLE_UPLOAD_ENABLED', 'SUPPORT_TEAM_DRIVES' ];
+				
+				for(var i=0; i<feature_keys.length;i++)
+					if( typeof config[feature_keys[i]] !== undefined && config[feature_keys[i]] === true )
+						PickerBuilder.enableFeature(google.picker.Feature[feature_keys[i]]);
+			})();
+            
+			PickerBuilder.build().setVisible(true);
 
         } else {
             showError('Unable to load the file picker.');
